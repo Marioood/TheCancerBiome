@@ -1,0 +1,3 @@
+Yet another "I'm just learning modding" mods, except that I already learned how to mod when I didn't know how to program... somehow. Adds three new enemies with custom AI and a weapon. That's it so far.
+
+I'm willing to accept suggestions if they're good enough.

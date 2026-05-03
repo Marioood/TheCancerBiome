@@ -1,0 +1,88 @@
+Mods: {
+	TheCancerBiome: {
+		Biomes: {
+			CancerSurfaceBiome: {
+				DisplayName: Cancer Surface Biome
+				TownNPCDialogueName: the Cancer Surface Biome
+			}
+
+			CancerUndergroundBiome: {
+				DisplayName: Cancer Underground Biome
+				TownNPCDialogueName: the Cancer Underground Biome
+			}
+		}
+
+		Tiles.CorruptCrystal.MapEntry: Corrupt Crystal
+
+		Items: {
+			CancerBossItem: {
+				DisplayName: Cancer Boss Item
+				Tooltip: ""
+			}
+
+			CancerStone: {
+				DisplayName: Cancer Stone
+				Tooltip: ""
+			}
+
+			Cellulose: {
+				DisplayName: Cellulose
+				Tooltip: ""
+			}
+
+			CorruptCrystal: {
+				DisplayName: Corrupt Crystal
+				Tooltip: ""
+			}
+
+			EndoplasmicReticulum: {
+				DisplayName: Endoplasmic Reticulum
+				Tooltip: ""
+			}
+
+			LipoidalClump: {
+				DisplayName: Lipoidal Clump
+				Tooltip: ""
+			}
+
+			PowerGlove: {
+				DisplayName: Power Glove
+				Tooltip: ""
+			}
+
+			TumorineBar: {
+				DisplayName: Tumorine Bar
+				Tooltip: "'Despite being metal, your fingers sink into the bar'"
+			}
+
+			TumorineOre: {
+				DisplayName: Tumorine Ore
+				Tooltip: ""
+			}
+
+			SwollenNucleus: {
+				DisplayName: Swollen Nucleus
+				Tooltip: ""
+			}
+
+			HandCannon: {
+				DisplayName: Hand Cannon
+				Tooltip: ""
+			}
+		}
+
+		NPCs: {
+			CancerBoss.DisplayName: Cancer Boss
+			CancerBossMinion.DisplayName: Cancer Boss Minion
+			FatHead.DisplayName: Fat Head
+			Immunocyte.DisplayName: Immunocyte
+			SoftshellMinicyte.DisplayName: Softshell Minicyte
+			StickyBuddy.DisplayName: Sticky Buddy
+		}
+
+		Projectiles: {
+			CancerBossProjectile.DisplayName: Cancer Boss Projectile
+			PowerGloveHand.DisplayName: Power Glove Hand
+		}
+	}
+}

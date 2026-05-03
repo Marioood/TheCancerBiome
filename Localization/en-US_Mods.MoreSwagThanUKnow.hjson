@@ -1,0 +1,132 @@
+# This file will automatically update with entries for new content after a build and reload.
+
+Items: {
+	Diddler: {
+		DisplayName: Diddler
+		Tooltip:
+			'''
+			Shoots globs of baby oil at your foes
+			The freakiest blade in existence
+			'''
+	}
+
+	BarrelLadBanner: {
+		DisplayName: Barrel Lad Banner
+		Tooltip: ""
+	}
+
+	NormalBirdBanner: {
+		DisplayName: Normal Bird Banner
+		Tooltip: ""
+	}
+
+	NormalHawkBanner: {
+		DisplayName: Normal Hawk Banner
+		Tooltip: ""
+	}
+
+	ShankerBanner: {
+		DisplayName: Shanker Banner
+		Tooltip: ""
+	}
+
+	GenTest: {
+		DisplayName: Gen Test
+		Tooltip: ""
+	}
+
+	CorruptCrystal: {
+		DisplayName: Corrupt Crystal
+		Tooltip: ""
+	}
+
+	PowerGlove: {
+		DisplayName: Power Glove
+		Tooltip: ""
+	}
+
+	VeinGenTest: {
+		DisplayName: Vein Gen Test
+		Tooltip: ""
+	}
+
+	CancerGrass: {
+		DisplayName: Cancer Grass
+		Tooltip: ""
+	}
+
+	LipoidalClump: {
+		Tooltip: ""
+		DisplayName: Lipoidal Clump
+	}
+
+	CancerStone: {
+		DisplayName: Cancer Stone
+		Tooltip: ""
+	}
+
+	Cellulose: {
+		DisplayName: Cellulose
+		Tooltip: ""
+	}
+
+	CancerBossItem: {
+		DisplayName: Cancer Boss Item
+		Tooltip: ""
+	}
+
+	EndoplasmicReticulum: {
+		DisplayName: Endoplasmic Reticulum
+		Tooltip: ""
+	}
+
+	TumorineBar: {
+		DisplayName: Tumorine Bar
+		Tooltip: "'Despite being metal, your fingers sink into the bar'"
+	}
+
+	TumorineOre: {
+		DisplayName: Tumorine Ore
+		Tooltip: ""
+	}
+}
+
+NPCs: {
+	MiniMimic.DisplayName: Mini Mimic
+	BarrelLad.DisplayName: Barrel Lad
+	NormalBird.DisplayName: Normal Bird
+	HugePoker.DisplayName: Huge Poker
+	NormalHawk.DisplayName: Normal Hawk
+	SucculentSack.DisplayName: Succulent Sack
+	HairyBrain.DisplayName: Hairy Brain
+	Shanker.DisplayName: Shanker
+	Rotavirus.DisplayName: Rotavirus
+	ClumpOfDiseasedSouls.DisplayName: Clump Of Diseased Souls
+	HoverMine.DisplayName: Hover Mine
+	StickyBuddy.DisplayName: Sticky Buddy
+	Immunocyte.DisplayName: Immunocyte
+	FatHead.DisplayName: Fat Head
+	CancerBoss.DisplayName: Cancer Boss
+	CancerBossMinion.DisplayName: Cancer Boss Minion
+	SoftshellMinicyte.DisplayName: Softshell Minicyte
+}
+
+Projectiles: {
+	BabyOilGlob.DisplayName: Baby Oil Glob
+	PowerGloveHand.DisplayName: Power Glove Hand
+	CancerBossProjectile.DisplayName: Cancer Boss Projectile
+}
+
+Tiles.CorruptCrystal.MapEntry: Corrupt Crystal
+
+Biomes: {
+	CancerSurfaceBiome: {
+		DisplayName: Cancer Surface Biome
+		TownNPCDialogueName: the Cancer Surface Biome
+	}
+
+	CancerUndergroundBiome: {
+		DisplayName: Cancer Underground Biome
+		TownNPCDialogueName: the Cancer Underground Biome
+	}
+}
