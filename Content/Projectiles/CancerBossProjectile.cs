@@ -20,7 +20,7 @@ namespace TheCancerBiome.Content.Projectiles
     
     public override void AI()
     {
-      Projectile.velocity.Y += 0.1f;
+      Projectile.velocity.Y += 0.075f;
       Projectile.rotation = (float)Math.Atan2(Projectile.velocity.X, -Projectile.velocity.Y);
     }
   }

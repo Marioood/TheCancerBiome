@@ -14,11 +14,11 @@ namespace TheCancerBiome.Content.Items
 			Item.width = 26;
 			Item.height = 28;
 			Item.useTime = 45;
-			Item.useAnimation = 40;
+			Item.useAnimation = 45;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.buyPrice(silver: 160);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item43;
+			Item.UseSound = SoundID.Item36;
 			Item.autoReuse = false;
       Item.shoot = ProjectileID.PurificationPowder;
       Item.shootSpeed = 12;

@@ -22,6 +22,7 @@ namespace TheCancerBiome.Content.Tiles
       //SetModTree(new )
 			AddMapEntry(new Color(0xF1,0x76,0x03));
 			//drop = ItemID.DirtBlock;
+      MineResist = 0.1f;
 		}
     
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)

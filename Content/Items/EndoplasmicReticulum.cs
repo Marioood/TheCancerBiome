@@ -8,7 +8,7 @@ namespace TheCancerBiome.Content.Items
 	{
 		public override void SetDefaults()
 		{
-			Item.damage = 20;
+			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 40;
 			Item.height = 56;
@@ -20,6 +20,7 @@ namespace TheCancerBiome.Content.Items
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
+      Item.scale = 1.25f;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

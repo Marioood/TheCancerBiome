@@ -5,26 +5,26 @@ using TheCancerBiome.Content.Projectiles;
 
 namespace TheCancerBiome.Content.Items
 { 
-	public class PowerGlove : ModItem
+	public class StruviteArrow : ModItem
 	{
 		public override void SetDefaults()
 		{
-			Item.damage = 38;
-			Item.DamageType = DamageClass.Magic;
+			Item.damage = 40;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 26;
 			Item.height = 28;
-			Item.useTime = 40;
-			Item.useAnimation = 40;
+			Item.useTime = 45;
+			Item.useAnimation = 45;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.value = Item.buyPrice(silver: 160);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item43;
-			Item.autoReuse = true;
-      Item.shoot = ModContent.ProjectileType<PowerGloveHand>();
-      Item.shootSpeed = 4f;
-      Item.mana = 12;
+			Item.UseSound = SoundID.Item36;
+			Item.autoReuse = false;
+      Item.shoot = ProjectileID.PurificationPowder;
+      Item.shootSpeed = 12;
 			Item.noMelee = true;
-      Item.knockBack = 2;
+      Item.knockBack = 6;
+      Item.useAmmo = AmmoID.Bullet;
 		}
 	}
 }

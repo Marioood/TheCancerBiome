@@ -5,11 +5,14 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using TheCancerBiome.Content.Items;
 using System;
+using Microsoft.Xna.Framework;
 
 namespace TheCancerBiome.Content.NPCs
 {
   public class SoftshellMinicyte : ModNPC
 	{
+    public ref float AiStartMoveDir => ref NPC.ai[0];
+    
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 1;
 		}
@@ -34,6 +37,11 @@ namespace TheCancerBiome.Content.NPCs
     }
 
 		public override void AI() {
+      if(AiStartMoveDir > 0) {
+        NPC.velocity = new Vector2((float)Math.Cos(AiStartMoveDir), (float)Math.Sin(AiStartMoveDir)) * 4;
+        AiStartMoveDir = 0;
+      }
+      
       NPC.TargetClosest(true);
       
       if(NPC.HasValidTarget)

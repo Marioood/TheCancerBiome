@@ -12,7 +12,10 @@ Mods: {
 			}
 		}
 
-		Tiles.CorruptCrystal.MapEntry: Corrupt Crystal
+		Tiles: {
+			CorruptCrystal.MapEntry: Corrupt Crystal
+			Struvite.MapEntry: Struvite
+		}
 
 		Items: {
 			CancerBossItem: {
@@ -47,7 +50,7 @@ Mods: {
 
 			PowerGlove: {
 				DisplayName: Power Glove
-				Tooltip: ""
+				Tooltip: "'What were they thinking?!'"
 			}
 
 			TumorineBar: {
@@ -60,13 +63,23 @@ Mods: {
 				Tooltip: ""
 			}
 
-			SwollenNucleus: {
-				DisplayName: Swollen Nucleus
+			HandCannon: {
+				DisplayName: Hand Cannon
 				Tooltip: ""
 			}
 
-			HandCannon: {
-				DisplayName: Hand Cannon
+			Struvite: {
+				DisplayName: Struvite
+				Tooltip: ""
+			}
+
+			RottenSugar: {
+				DisplayName: Rotten Sugar
+				Tooltip: ""
+			}
+
+			StruviteArrow: {
+				DisplayName: Struvite Arrow
 				Tooltip: ""
 			}
 		}
@@ -78,11 +91,18 @@ Mods: {
 			Immunocyte.DisplayName: Immunocyte
 			SoftshellMinicyte.DisplayName: Softshell Minicyte
 			StickyBuddy.DisplayName: Sticky Buddy
+			CancerBossTwo.DisplayName: Cancer Boss Two
+			CancerBossTwoMembrane.DisplayName: Cancer Boss Two Membrane
+			HugeCancerBossTwoMembrane.DisplayName: Huge Cancer Boss Two Membrane
+			TinyCancerBossTwoMembrane.DisplayName: Tiny Cancer Boss Two Membrane
+			ModerateCancerBossTwoMembrane.DisplayName: Moderate Cancer Boss Two Membrane
+			SmallCancerBossTwoMembrane.DisplayName: Small Cancer Boss Two Membrane
 		}
 
 		Projectiles: {
 			CancerBossProjectile.DisplayName: Cancer Boss Projectile
 			PowerGloveHand.DisplayName: Power Glove Hand
+			StruviteArrow.DisplayName: Struvite Arrow
 		}
 	}
 }

@@ -26,9 +26,11 @@ namespace TheCancerBiome.Content.Tiles
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(0, 255, 255));
+			AnimationFrameHeight = 36;
 		}
     
     public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+      //look in WorldGen.cs for this code
 			if (!WorldGen.gen && Main.netMode != NetmodeID.MultiplayerClient) {
         WorldGen.shadowOrbCount++;
         WorldGen.shadowOrbSmashed = true;
@@ -48,5 +50,10 @@ namespace TheCancerBiome.Content.Tiles
       
       return null;
     }
+    
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			frame = Main.tileFrame[TileID.ShadowOrbs];
+		}
+    
 	}
 }

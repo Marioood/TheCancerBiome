@@ -22,10 +22,20 @@ namespace TheCancerBiome.Content.Tiles
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.CoordinateHeights = [16, 18];
+			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
 
 			// Etc
 			AddMapEntry(new Color(0, 255, 255));
 		}
+    
+    public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
+      //if(!noItem) fail = true;
+      /*if (tile.type == (ushort) 26 && (sItem.hammer < 80 || !Main.hardMode))
+      {
+        damageAmount = 0;
+        this.Hurt(PlayerDeathReason.ByOther(4), this.statLife / 2, -this.direction, false, false, false, -1);
+      }*/
+    }
 	}
 }

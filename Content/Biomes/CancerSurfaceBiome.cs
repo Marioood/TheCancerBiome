@@ -22,7 +22,7 @@ namespace TheCancerBiome.Content.Biomes
     
     
     // Select Music
-		public override int Music => MusicID.Eerie;
+		public override int Music => MusicLoader.GetMusicSlot(Mod, "Assets/Music/SurfaceTemp");
 		/* If you need the music choice to be conditional, such as supporting the Otherworld soundtrack toggle, you can use this approach:
 		public override int Music {
 			get {

@@ -8,24 +8,19 @@ using System;
 
 namespace TheCancerBiome.Content.Projectiles
 {
-  public class PowerGloveHand : ModProjectile
+  public class StruviteArrow : ModProjectile
   {
-    private int maxTime = 10 * 60;
-    
     public override void SetDefaults()
     {
-      Projectile.width = 26;
-      Projectile.height = 26;
+      Projectile.width = 14;
+      Projectile.height = 32;
       
       Projectile.friendly = true;
-      Projectile.DamageType = DamageClass.Magic;
-      Projectile.timeLeft = maxTime;
+      Projectile.DamageType = DamageClass.Ranged;
     }
     
     public override void AI()
     {
-      Projectile.velocity *= 0.99f;
-      
       /*Player plr = Main.player[Projectile.owner];
       
       if(plr.active) {
@@ -36,16 +31,8 @@ namespace TheCancerBiome.Content.Projectiles
       Projectile.velocity += Projectile.DirectionTo(Main.MouseWorld) * 0.25f;
       
       Projectile.rotation = (float)Math.Atan2(Projectile.velocity.X, Projectile.velocity.Y);
-      
-      Dust dust = Dust.NewDustDirect(Projectile.TopLeft, Projectile.width, Projectile.height, ModContent.DustType<PowerGloveDust>());
-      dust.velocity *= 0.5f;
+      //Projectile.velocity.Y += 0.1f;
     }
-    
-    public override Color? GetAlpha(Color lightColor) {
-      //float col = 1 - (Projectile.timeLeft / (float)maxTime);
-      return new Color(1f, 1f, 1f, 0f);
-    }
-    
     public override void OnKill(int timeLeft)
     {
       SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);

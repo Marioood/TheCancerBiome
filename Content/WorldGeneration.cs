@@ -28,7 +28,7 @@ namespace TheCancerBiome.Content
     private ushort cancerStone = (ushort)ModContent.TileType<Tiles.CancerStone>();
     private ushort tumorine = (ushort)ModContent.TileType<Tiles.Tumorine>();
     private ushort cancerGrass = (ushort)ModContent.TileType<Tiles.CancerGrass>();
-    private ushort cancerCrystal = (ushort)ModContent.TileType<Tiles.CorruptCrystal>();
+    private ushort cancerCrystal = (ushort)ModContent.TileType<Tiles.Struvite>();
     
     private ushort orbNucleus = (ushort)ModContent.TileType<Tiles.SwollenNucleus>();
     private ushort cancerAltar = (ushort)ModContent.TileType<Tiles.CancerAltar>();
@@ -343,7 +343,7 @@ namespace TheCancerBiome.Content
           Main.tile[px + x, py - y].ClearTile();
         }
       }
-      
+      WorldGen.altarCount++;
       WorldGen.PlaceTile(px, py - 1, cancerAltar);
     }
     

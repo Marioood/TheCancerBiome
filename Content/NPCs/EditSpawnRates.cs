@@ -3,15 +3,14 @@ using Terraria;
 using TheCancerBiome.Common.Systems;
 using System;
 using System.Collections.Generic;
+using TheCancerBiome.Content.Biomes;
 
 namespace TheCancerBiome.Content.NPCs {
   
   public class EditSpawnRates : GlobalNPC {
     
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
-      //Player plr = spawnInfo.player;
-      
-      if(ModContent.GetInstance<CancerBiomeTileCount>().cancerBlockCount >= 40) {
+      if(spawnInfo.Player.InModBiome<CancerSurfaceBiome>() || spawnInfo.Player.InModBiome<CancerUndergroundBiome>()) {
         //TODO: one or more npcs that spawn after downing the evil biome boss
         
         pool.Clear();

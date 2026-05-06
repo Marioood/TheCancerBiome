@@ -18,8 +18,8 @@ namespace TheCancerBiome.Content.Items
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-				.AddIngredient<TumorineOre>(2)
-				.AddIngredient<CorruptCrystal>(1)
+				.AddIngredient<TumorineOre>(3)
+				//.AddIngredient<Struvite>(1)
         .AddTile(TileID.Furnaces)
 				.Register();
 		}
