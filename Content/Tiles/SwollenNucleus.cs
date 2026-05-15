@@ -12,6 +12,7 @@ namespace TheCancerBiome.Content.Tiles
 	public class SwollenNucleus : ModTile
 	{
 		public override void SetStaticDefaults() {
+			Main.tileLighted[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileFrameImportant[Type] = true;
       Main.tileHammer[Type] = true;
@@ -25,7 +26,7 @@ namespace TheCancerBiome.Content.Tiles
       TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(new Color(0, 255, 255));
+			AddMapEntry(new Color(0x00,0x71,0xDD));
 			AnimationFrameHeight = 36;
 		}
     
@@ -55,5 +56,11 @@ namespace TheCancerBiome.Content.Tiles
 			frame = Main.tileFrame[TileID.ShadowOrbs];
 		}
     
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+      float pulse = Main.rand.Next(28, 42) * 0.005f;
+      r = 0.1f/8 + pulse;
+      g = 0.7f/8 + pulse;
+      b = 0.9f/8 + pulse;
+		}
 	}
 }

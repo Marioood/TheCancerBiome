@@ -15,6 +15,7 @@ Mods: {
 		Tiles: {
 			CorruptCrystal.MapEntry: Corrupt Crystal
 			Struvite.MapEntry: Struvite
+			Tumorine.MapEntry: Tumorine
 		}
 
 		Items: {
@@ -82,6 +83,26 @@ Mods: {
 				DisplayName: Struvite Arrow
 				Tooltip: ""
 			}
+
+			GrotesquePickaxe: {
+				DisplayName: Grotesque Pickaxe
+				Tooltip: ""
+			}
+
+			Lumpstone: {
+				DisplayName: Lumpstone
+				Tooltip: ""
+			}
+
+			Lumpsand: {
+				DisplayName: Lumpsand
+				Tooltip: ""
+			}
+
+			BouncyBall: {
+				DisplayName: Bouncy Ball
+				Tooltip: "'Uhhh he-h-he-he-h-h-he'"
+			}
 		}
 
 		NPCs: {
@@ -103,6 +124,9 @@ Mods: {
 			CancerBossProjectile.DisplayName: Cancer Boss Projectile
 			PowerGloveHand.DisplayName: Power Glove Hand
 			StruviteArrow.DisplayName: Struvite Arrow
+			LumpsandBallFallingProjectile.DisplayName: Lumpsand Ball Falling Projectile
+			LumpsandBallGunProjectile.DisplayName: Lumpsand Ball Gun Projectile
+			BouncyBall.DisplayName: Bouncy Ball
 		}
 	}
 }

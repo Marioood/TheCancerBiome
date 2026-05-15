@@ -13,7 +13,7 @@ namespace TheCancerBiome.Content.Tiles
 			Main.tileBlockLight[Type] = true;
 
 			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(144, 129, 209), name);
+			AddMapEntry(new Color(0xE2,0xA9,0x80), name);
 
 			//DustType = DustID.Platinum;
 			HitSound = SoundID.Tink;

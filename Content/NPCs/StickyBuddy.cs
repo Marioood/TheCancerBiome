@@ -44,16 +44,19 @@ namespace TheCancerBiome.Content.NPCs
         Player thePlayer = Main.player[NPC.target];
         dir = NPC.Center.X < thePlayer.Center.X ? 1 : -1;
       }
-        
-      if(AiWaitTimer > maxWaitTimer) {
-        AiWaitTimer = 0;
-        NPC.velocity.Y = -0.65f * 16;
-        NPC.velocity.X = 0.5f * 16 * dir;
-        
-      } else if(NPC.velocity.Length() < 0.1f && NPC.collideY) {
-        AiWaitTimer++;
+      bool onWater = Main.tile[(int)NPC.Center.X / 16, (int)NPC.Center.Y / 16].CheckingLiquid;
+      if(onWater) {
+        NPC.velocity.Y -= 0.25f;
+      } else {
+        if(AiWaitTimer > maxWaitTimer) {
+          AiWaitTimer = 0;
+          NPC.velocity.Y = -0.65f * 16;
+          NPC.velocity.X = 0.5f * 16 * dir;
+          
+        } else if(NPC.velocity.Length() < 0.1f && NPC.collideY) {
+          AiWaitTimer++;
+        }
       }
-      
       NPC.velocity *= NPC.collideY ? 0.8f : 0.99f;
       if(NPC.collideX) {
         NPC.velocity.X *= -1f;

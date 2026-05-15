@@ -15,11 +15,6 @@ namespace TheCancerBiome.Content.NPCs
     public int newCellCount = 2;
     
     public ref float AiStartMoveDir => ref NPC.ai[0];
-    //will be -1 if this was spawned in via cheats. will always be <= 0 if it was spawned by CancerBossTwo
-    public int AiParentIdx {
-      get => (int)NPC.ai[1] - 1;
-      set => NPC.ai[1] = value + 1;
-    }
     public int AiAnimTimer = 0;
     
 		public override void SetStaticDefaults() {

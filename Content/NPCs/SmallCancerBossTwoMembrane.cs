@@ -16,11 +16,10 @@ namespace TheCancerBiome.Content.NPCs
 		{
       PanSetup();
       
-			NPC.width = 32;
-			NPC.height = 32;
+			NPC.width = 64;
+			NPC.height = 64;
 			NPC.damage = 25;
-      NPC.lifeMax = 30;
-      NPC.scale = 2;
+      NPC.lifeMax = 40;
 		}
     
     public override void OnKill() {

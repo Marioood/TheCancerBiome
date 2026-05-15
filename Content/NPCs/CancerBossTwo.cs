@@ -4,8 +4,11 @@ using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
 using TheCancerBiome.Content.Items;
 using TheCancerBiome.Content.Projectiles;
+using TheCancerBiome.Content.Dusts;
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
+using Terraria.Localization;
 using Terraria.Audio;
 using Terraria.ModLoader.Utilities;
 
@@ -17,10 +20,25 @@ namespace TheCancerBiome.Content.NPCs
     public ref float AiState => ref NPC.ai[0];
     public ref float AiTeleTimer => ref NPC.ai[1];
     public ref float AiTurnMult => ref NPC.ai[2];
+    public ref float AiNextState => ref NPC.ai[3];
+    public float AiDestX = 0;
+    public float AiDestY = 0;
     
-    float StateSetup = 0;
-    float StateWait = 1;
-    float StateFire = 2;
+    public const float StateSetup = 0;
+    public const float StateWait = 1;
+    public const float StateFire = 2;
+    
+    public const float ChangeStateTime = (4 * 60);
+    
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(AiDestX);
+			writer.Write(AiDestY);
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			AiDestY = reader.ReadSingle();
+			AiDestX = reader.ReadSingle();
+		}
     
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 1;
@@ -35,13 +53,13 @@ namespace TheCancerBiome.Content.NPCs
 			NPC.damage = 50;
 			NPC.defense = 6;
 			NPC.lifeMax = 2500;
-			NPC.HitSound = SoundID.NPCHit4;
+			NPC.HitSound = SoundID.NPCHit9;
 			NPC.DeathSound = SoundID.NPCDeath23;
 			NPC.value = 5 * 100 * 100;
 			NPC.knockBackResist = 0;
       NPC.aiStyle = -1;
 			NPC.boss = true;
-			NPC.npcSlots = 10; // Take up open spawn slots, preventing random NPCs from spawning during the fight
+			NPC.npcSlots = 10;
       NPC.noTileCollide = true;
 		}
     
@@ -52,62 +70,70 @@ namespace TheCancerBiome.Content.NPCs
       NPC.GravityMultiplier *= 0;
       
       if(AiState == StateSetup) {
-        /*NPC minion = NPC.NewNPCDirect(
-          NPC.GetSource_FromAI(),
-          (int)NPC.Center.X,
-          (int)NPC.Center.Y,
-          ModContent.NPCType<HugeCancerBossTwoMembrane>(),
-          NPC.whoAmI
-        );
-				if(minion.whoAmI != Main.maxNPCs) {
-          //check for fail from spawn cap
-          HugeCancerBossTwoMembrane castedMinion = (HugeCancerBossTwoMembrane)minion.ModNPC;
-          castedMinion.AiParentIdx = NPC.whoAmI;
-        }*/
         AiState = StateWait;
+        AiNextState = (float)Main.rand.NextDouble();
+        AiDestX = NPC.Center.X;
+        AiDestY = NPC.Center.Y;
+          
         AiTeleTimer = 1;
         AiTurnMult = (float)(Main.rand.NextDouble() * 2 - 1) * 0.025f;
       }
       NPC.TargetClosest(true);
+    
+      Player thePlayer = Main.player[NPC.target];
       
-      if(NPC.HasValidTarget)
+      if (thePlayer.dead) {
+        NPC.velocity.Y += 0.1f;
+        NPC.EncourageDespawn(10);
+        return;
+      }
+      
+      if(Main.netMode != NetmodeID.MultiplayerClient)
       {
-        Player thePlayer = Main.player[NPC.target];
         
         if(AiState == StateWait) {
-          if((int)AiTeleTimer % (4 * 60) == 0) {
-            double choice = Main.rand.NextDouble();
+          int modularTimer = (int)(AiTeleTimer % ChangeStateTime);
+          
+          if(AiNextState <= 0.25 && modularTimer > ChangeStateTime / 2) {
+            Dust dust = Dust.NewDustDirect(new Vector2(AiDestX - NPC.width / 2, AiDestY - NPC.height / 2), NPC.width, NPC.height, ModContent.DustType<CancerStoneDust>());
             
-            if(choice > 0.5) {
+            dust = Dust.NewDustDirect(NPC.TopLeft, NPC.width, NPC.height, ModContent.DustType<CancerStoneDust>());
+          }
+          
+          if(modularTimer == 0) {
+            double choice = AiNextState;//Main.rand.NextDouble();
+            AiNextState = (float)Main.rand.NextDouble();
+            
+            if(AiNextState <= 0.25f) {
+              double ang = Main.rand.NextDouble() * 6.28318530718;
+              Vector2 offs = new Vector2((float)Math.Cos(ang), (float)Math.Sin(ang)) * 24 * 16;
+              Vector2 pos = thePlayer.Center + offs;
+              AiDestX = pos.X;
+              AiDestY = pos.Y;
+            }
+            
+            if(choice > 0.5f) {
               //ranges from 4 to 20 projectiles depending on current health
               AiTeleTimer = ((int)(NPC.lifeMax - NPC.life) / 1000 + 1) * 4 * 10;
               AiState = StateFire;
               
-            } else if(choice > 0.25) {
+            } else if(choice > 0.25f) {
               int moderate = ModContent.NPCType<ModerateCancerBossTwoMembrane>();
               int small = ModContent.NPCType<SmallCancerBossTwoMembrane>();
               int tiny = ModContent.NPCType<SoftshellMinicyte>();
               int cellChoice = Main.rand.Next(3);
               
-              switch(cellChoice) {
-                case 0:
-                  NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center, moderate, NPC.whoAmI, (float)Main.rand.NextDouble() * 6.28318530718f);
-                  break;
-                case 1:
-                  for(int i = 0; i < 2; i++)
-                    NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center, small, NPC.whoAmI, (float)Main.rand.NextDouble() * 6.28318530718f);
-                  break;
-                case 2:
-                  for(int i = 0; i < 2; i++)
-                    NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center, tiny, NPC.whoAmI, (float)Main.rand.NextDouble() * 6.28318530718f);
-                  break;
+              if(cellChoice == 0) {
+                for(int i = 0; i < 2; i++)
+                  NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center, tiny, NPC.whoAmI, (float)Main.rand.NextDouble() * 6.28318530718f);
+              } else {
+                NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center, moderate, NPC.whoAmI, (float)Main.rand.NextDouble() * 6.28318530718f);
               }
               SoundEngine.PlaySound(SoundID.Item16, NPC.Center);
               
             } else {
-              double ang = Main.rand.NextDouble() * 6.28318530718;
-              Vector2 offs = new Vector2((float)Math.Cos(ang), (float)Math.Sin(ang)) * 24 * 16;
-              NPC.Center = thePlayer.Center + offs;
+              //teleport
+              NPC.Center = new Vector2(AiDestX, AiDestY);
               SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
             }
             AiTurnMult = (float)(Main.rand.NextDouble() * 2 - 1) * 0.05f;
@@ -140,8 +166,13 @@ namespace TheCancerBiome.Content.NPCs
         
         float dist = NPC.Distance(thePlayer.Center);
         float desiredDistance = 16 * 16;
-        //make this non-linear somehow? sqrt? also show model of this in desmos
         NPC.velocity += NPC.DirectionTo(thePlayer.Center) * (dist - desiredDistance) * 0.001f;
+        //limit speed so that boss doesn't unfairly slam into players at LUDICRIS SPEEDS!
+        float len = NPC.velocity.Length();
+        if(len > 6) {
+          NPC.velocity /= len;
+          NPC.velocity *= 6;
+        }
         
         NPC.velocity *= 0.99f;
       }

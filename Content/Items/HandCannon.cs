@@ -9,7 +9,7 @@ namespace TheCancerBiome.Content.Items
 	{
 		public override void SetDefaults()
 		{
-			Item.damage = 40;
+			Item.damage = 38;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 26;
 			Item.height = 28;

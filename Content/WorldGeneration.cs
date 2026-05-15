@@ -25,13 +25,15 @@ namespace TheCancerBiome.Content
 
 	public class CancerGenPass : GenPass
 	{
-    private ushort cancerStone = (ushort)ModContent.TileType<Tiles.CancerStone>();
+    private ushort cancerStone = (ushort)ModContent.TileType<Tiles.Lumpstone>();
     private ushort tumorine = (ushort)ModContent.TileType<Tiles.Tumorine>();
     private ushort cancerGrass = (ushort)ModContent.TileType<Tiles.CancerGrass>();
+    private ushort cancerSand = (ushort)ModContent.TileType<Tiles.Lumpsand>();
     private ushort cancerCrystal = (ushort)ModContent.TileType<Tiles.Struvite>();
     
     private ushort orbNucleus = (ushort)ModContent.TileType<Tiles.SwollenNucleus>();
     private ushort cancerAltar = (ushort)ModContent.TileType<Tiles.CancerAltar>();
+    private ushort cancerTallGrass = (ushort)ModContent.TileType<Tiles.CancerTallGrass>();
     
     ushort tumorineWall = (ushort)ModContent.WallType<Walls.TumorineWall>();
     private ushort cancerStoneWall = (ushort)ModContent.WallType<Walls.CancerStoneWall>();
@@ -42,15 +44,49 @@ namespace TheCancerBiome.Content
 		public CancerGenPass(string name, float loadWeight) : base(name, loadWeight) { }
 
 		protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration) {
-			progress.Message = "cancer WIP";
+			progress.Message = "Spreading evil";
       
-      int biomeWidth = Main.maxTilesX / 10;
-      int biomeHeight = 300;
+      int biomeWidth = Main.maxTilesX / 9;
+      int biomeHeight = 400;
       int biomeCenterX = Main.maxTilesX / 2;
-      int biomeCenterY = (int)Main.worldSurface + 20;
+      //min cloud levels
+      //small - 200
+      //med - 160
+      //large - 260
+      
+      int si = Main.maxTilesY / 6;
+      
+      for(; si < Main.maxTilesY; si++) {
+        Tile tile = Main.tile[biomeCenterX, si];
+        if(tile.HasTile && (tile.TileType == TileID.Dirt || tile.TileType == TileID.Stone || tile.TileType == TileID.Sand)) {
+          break;
+        }
+      }
+      
+      int biomeCenterY = si;
+      
+      /*double biomeCenterYAvg = biomeCenterY;
+      
+      for(int i = 0; i < 256; i++) {
+        int x = WorldGen.genRand.Next(biomeWidth / -2, biomeWidth / 2)   + biomeCenterX;
+        int y = WorldGen.genRand.Next(biomeHeight / -2, biomeHeight / 2) + biomeCenterY;
+        if(Main.tile[x, (int)(biomeCenterY)].HasTile) {
+          if(!Main.tile[x, y].HasTile) {
+            biomeCenterYAvg = (biomeCenterYAvg + y) / 2;
+          }
+          biomeCenterYAvg += 2;
+        } else {
+          if(Main.tile[x, y].HasTile) {
+            biomeCenterYAvg = (biomeCenterYAvg + y) / 2;
+          }
+          biomeCenterYAvg += 2;
+        }
+      }
+      biomeCenterY = (int)biomeCenterYAvg;*/
       
       List<int> cellXs = new List<int>();
       List<int> cellYs = new List<int>();
+      List<int> cellRadii = new List<int>();
       
       List<int> crystalXs = new List<int>();
       List<int> crystalYs = new List<int>();
@@ -62,21 +98,26 @@ namespace TheCancerBiome.Content
       List<int> nucleusOrbXs = new List<int>();
       List<int> nucleusOrbYs = new List<int>();
       //underground tunnels
-      for(int t = 0; t < 6; t++) {
-        int rx = biomeCenterX + WorldGen.genRand.Next(biomeWidth) - (biomeWidth / 2);
-        int ry = biomeCenterY + WorldGen.genRand.Next(biomeHeight / 2);
-        int tunnelRadius = WorldGen.genRand.Next(48) + 64;
+      //tunnels generate in V shape. abs(abs(x-3)/2-0.5) OR abs(x - 2) / 2
+      for(int t = 0; t < 5; t++) {
+        int rx = (biomeWidth * t / 5) - biomeWidth / 2 + biomeCenterX;//biomeCenterX + WorldGen.genRand.Next(biomeWidth) - (biomeWidth / 2);
+        double offsY = Math.Abs(Math.Abs(t - 2) / 2.0);
+        int ry = biomeCenterY - (int)(offsY * 200) + 180;//biomeCenterY + WorldGen.genRand.Next(biomeHeight) - 64;
+        int tunnelRadius = WorldGen.genRand.Next(32) + 80;
         PlaceTunnels(rx, ry, tunnelRadius);
         int cellCount = tunnelRadius / 10;
         //add to a queue so that tunnels don't overwrite cells
         for(int c = 0; c < cellCount; c++) {
           cellXs.Add(rx + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
           cellYs.Add(ry + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
+          int cellRadius = WorldGen.genRand.Next(8) + 4;
+          if(WorldGen.genRand.Next(8) == 0) cellRadius += 4;
+          cellRadii.Add(cellRadius);
         
           crystalXs.Add(rx + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
           crystalYs.Add(ry + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
           int r = WorldGen.genRand.Next(4) + 2;
-          if(WorldGen.genRand.Next(8) == 0) r += WorldGen.genRand.Next(8) + 4;
+          if(WorldGen.genRand.Next(12) == 0) r += WorldGen.genRand.Next(8) + 4;
           crystalRadii.Add(r);
         }
         int altarCount = tunnelRadius / 5;
@@ -84,22 +125,34 @@ namespace TheCancerBiome.Content
           altarXs.Add(rx + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
           altarYs.Add(ry + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
         }
+        if(WorldGen.genRand.Next(3) == 0) {
+          cellXs.Add(rx);
+          cellYs.Add(ry);
+          cellRadii.Add(tunnelRadius / 4);
+        }
       }
       //overground tunnels
-      for(int t = 0; t < 4; t++) {
+      /*for(int t = 0; t < 4; t++) {
         int rx = biomeCenterX + WorldGen.genRand.Next(biomeWidth) - (biomeWidth / 2);
-        int ry = biomeCenterY - WorldGen.genRand.Next(48) - 48;
-        int tunnelRadius = WorldGen.genRand.Next(32) + 32;
+        int ry = biomeCenterY - WorldGen.genRand.Next(32) + 16;
+        int tunnelRadius = WorldGen.genRand.Next(32) + 64;
         PlaceTunnels(rx, ry, tunnelRadius);
-      }
+        
+        altarXs.Add(rx + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
+        altarYs.Add(ry + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
+        cellXs.Add(rx + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
+        cellYs.Add(ry + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
+        for(int cs = 0; cs < 4; cs++) {
+          crystalXs.Add(rx + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
+          crystalYs.Add(ry + WorldGen.genRand.Next(tunnelRadius) - (tunnelRadius / 2));
+        }
+      }*/
       //underground cells
       for(int c = 0; c < cellXs.Count; c++) {
-        int cellRadius = WorldGen.genRand.Next(8) + 4;
-        if(WorldGen.genRand.Next(4) == 0) cellRadius *= 2;
-        PlaceCell(cellXs[c], cellYs[c], cellRadius, WorldGen.genRand.Next(2) == 0, nucleusOrbXs, nucleusOrbYs);
+        PlaceCell(cellXs[c], cellYs[c], cellRadii[c], WorldGen.genRand.Next(4) != 0, nucleusOrbXs, nucleusOrbYs);
       }
       //giant central cell
-      PlaceCell(biomeCenterX, biomeCenterY + 16, 64 - Main.rand.Next(8), true, nucleusOrbXs, nucleusOrbYs);
+      PlaceCell(biomeCenterX, biomeCenterY + 100, 72 + WorldGen.genRand.Next(8), true, nucleusOrbXs, nucleusOrbYs);
       //crystals
       for(int c = 0; c < crystalRadii.Count; c++) {
         PlaceCrystal(crystalXs[c], crystalYs[c], crystalRadii[c]);
@@ -133,13 +186,23 @@ namespace TheCancerBiome.Content
         }
         if(skipFlag) continue;
         
-        for(int y = 0; y < 2; y++) {
-          for(int x = 0; x < 2; x++) {
-            Main.tile[nx + x, ny + y].ClearTile();
+        //cells can generate on the surface. having nuclei with very powerful weapons available that easily sounds bad to me
+        bool oreNucleus = ny < biomeCenterY;
+        if(oreNucleus) {
+          for(int y = 0; y < 2; y++) {
+            for(int x = 0; x < 2; x++) {
+              Main.tile[nx + x, ny + y].ResetToType(tumorine);
+            }
           }
+        } else {
+          for(int y = 0; y < 2; y++) {
+            for(int x = 0; x < 2; x++) {
+              Main.tile[nx + x, ny + y].ClearTile();
+            }
+          }
+          
+          WorldGen.PlaceTile(nx, ny, orbNucleus);
         }
-        
-        WorldGen.PlaceTile(nx, ny, orbNucleus);
       }
       
       //tile replacements
@@ -163,6 +226,9 @@ namespace TheCancerBiome.Content
           } else if(cur.TileType == TileID.Stone) {
             cur.ResetToType(cancerStone);
             
+          } else if(cur.TileType == TileID.Sand) {
+            cur.ResetToType(cancerSand);
+            
           } else if(cur.TileType == TileID.Dirt) {
             Tile top = Framing.GetTileSafely(x,y-1);
             Tile bot = Framing.GetTileSafely(x,y+1);
@@ -173,6 +239,9 @@ namespace TheCancerBiome.Content
             
             if(airy) {
               cur.ResetToType(cancerGrass);
+              if(WorldGen.genRand.Next(2) == 0 && !Framing.GetTileSafely(x, y-1).HasTile) {
+                Framing.GetTileSafely(x, y-1).ResetToType(cancerTallGrass);
+              }
             }
           } else if(
             cur.TileType == TileID.Copper
@@ -261,15 +330,15 @@ namespace TheCancerBiome.Content
       
       noiseTable = new byte[width,height];
       
-      double ScaleX = WorldGen.genRand.NextDouble() * 24 + 16;
-      double ScaleY = WorldGen.genRand.NextDouble() * 24 + 16;
+      double ScaleX = 64;//WorldGen.genRand.NextDouble() * 24 + 16;
+      double ScaleY = 24;//WorldGen.genRand.NextDouble() * 24 + 16;
       
       for(int yi = 0; yi < height; yi++) {
         for(int xi = 0; xi < width; xi++) {
-          noiseTable[xi,yi] = Voronoi(xi / ScaleX, yi / ScaleY, voronoiSeed);
+          noiseTable[xi,yi] = Voronoi(xi / ScaleX + px, yi / ScaleY + py, voronoiSeed);
         }
       }
-      voronoiSeed++;
+      //voronoiSeed++;
       
       for(int yi = -radius; yi <= radius; yi++) {
         for(int xi = -radius; xi <= radius; xi++) {
@@ -278,12 +347,17 @@ namespace TheCancerBiome.Content
           double dist = Math.Sqrt(xN * xN + yN * yN);
             
           double noisyDist = (1 - dist * dist * dist * dist) * (WorldGen.genRand.NextDouble() * 0.5 + 0.5);
-            
-          if(noisyDist > 0.5) {
+          Tile t = Main.tile[px + xi, py + yi];
+          bool willCheck =
+            t.HasTile && t.TileType == TileID.Dirt ? dist < 1 : noisyDist > 0.5;
+          
+          if(willCheck) {
             HashSet<Byte> uniques = new HashSet<Byte>();
             bool hasBorder = false;
-            for(int yk = -2; yk <= 2; yk++) {
-              for(int xk = -2; xk <= 2; xk++) {
+            int yBorderRadius = 3;
+            int xBorderRadius = WorldGen.genRand.Next(2) + 3;
+            for(int yk = -yBorderRadius; yk <= yBorderRadius; yk++) {
+              for(int xk = -xBorderRadius; xk <= xBorderRadius; xk++) {
                 uniques.Add(noiseTable[iClamp(xk + xi + radius, 0, width - 1), iClamp(yi + yk + radius, 0, height - 1)]);
                 hasBorder = uniques.Count > 1;
                 if(hasBorder) {

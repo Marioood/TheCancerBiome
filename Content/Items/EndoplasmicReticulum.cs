@@ -8,14 +8,14 @@ namespace TheCancerBiome.Content.Items
 	{
 		public override void SetDefaults()
 		{
-			Item.damage = 18;
+			Item.damage = 24;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 40;
 			Item.height = 56;
-			Item.useTime = 16;
-			Item.useAnimation = 16;
+			Item.useTime = 25;
+			Item.useAnimation = 25;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 8;
+			Item.knockBack = 12;
 			Item.value = Item.buyPrice(silver: 12);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;

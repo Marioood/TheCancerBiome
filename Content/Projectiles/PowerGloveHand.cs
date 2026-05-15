@@ -10,8 +10,6 @@ namespace TheCancerBiome.Content.Projectiles
 {
   public class PowerGloveHand : ModProjectile
   {
-    private int maxTime = 10 * 60;
-    
     public override void SetDefaults()
     {
       Projectile.width = 26;
@@ -19,21 +17,17 @@ namespace TheCancerBiome.Content.Projectiles
       
       Projectile.friendly = true;
       Projectile.DamageType = DamageClass.Magic;
-      Projectile.timeLeft = maxTime;
     }
     
     public override void AI()
     {
       Projectile.velocity *= 0.99f;
       
-      /*Player plr = Main.player[Projectile.owner];
-      
-      if(plr.active) {
-        Projectile.velocity += Projectile.DirectionTo(new Vector2(plr.tileTargetX * 16, tileTargetY * 16)) * 0.25f;
-      }*/
-      
-      //Projectile.velocity += Projectile.DirectionTo(Main.MouseWorld) * 0.25f;
-      Projectile.velocity += Projectile.DirectionTo(Main.MouseWorld) * 0.25f;
+      if(Projectile.owner == Main.myPlayer) {
+        Projectile.ai[0] = Main.MouseWorld.X;
+        Projectile.ai[1] = Main.MouseWorld.Y;
+      }
+      Projectile.velocity += Projectile.DirectionTo(new Vector2(Projectile.ai[0], Projectile.ai[1])) * 0.25f;
       
       Projectile.rotation = (float)Math.Atan2(Projectile.velocity.X, Projectile.velocity.Y);
       

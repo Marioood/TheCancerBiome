@@ -12,9 +12,10 @@ namespace TheCancerBiome.Content.Tiles
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = true;
-
-			AddMapEntry(new Color(0xF1,0x76,0x03));
 			HitSound = SoundID.Tink;
+
+			LocalizedText name = CreateMapEntryName();
+			AddMapEntry(new Color(0xF1,0x76,0x03), name);
 		}
   }
 }

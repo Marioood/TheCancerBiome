@@ -1,12 +1,24 @@
 using Terraria.ModLoader;
+using Terraria;
 
 namespace TheCancerBiome.Backgrounds
 {
 	public class CancerSurfaceBiomeBackground : ModSurfaceBackgroundStyle
 	{
+    //fade color 84C7FF
+    private int variantCount = 4;
+    private int variant = 0;
+
+    private int getVariant() {
+      return (int)(Main.LocalPlayer.VisualPosition.X / 16 / Main.maxTilesX * variantCount);
+    }
+    
 		public override void ModifyFarFades(float[] fades, float transitionSpeed) {
 			for (int i = 0; i < fades.Length; i++) {
 				if (i == Slot) {
+          if(fades[i] == 0) {
+            variant = getVariant();
+          }
 					fades[i] += transitionSpeed;
 					if (fades[i] > 1f) {
 						fades[i] = 1f;
@@ -20,34 +32,16 @@ namespace TheCancerBiome.Backgrounds
 				}
 			}
 		}
-
 		public override int ChooseFarTexture() {
 			return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/CancerSurfaceFar");
 		}
 
-		private static int SurfaceFrameCounter;
-		private static int SurfaceFrame;
 		public override int ChooseMiddleTexture() {
-			if (++SurfaceFrameCounter > 12) {
-				SurfaceFrame = (SurfaceFrame + 1) % 4;
-				SurfaceFrameCounter = 0;
-			}
-			switch (SurfaceFrame) {
-				case 0:
-					return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/CancerSurfaceMid");
-				case 1:
-					return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/CancerSurfaceMid");
-				case 2:
-					return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/CancerSurfaceMid");
-				case 3:
-					return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/CancerSurfaceMid");
-				default:
-					return -1;
-			}
+      return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/CancerSurfaceMid2");
 		}
-
+    
 		public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b) {
-			return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/CancerSurfaceClose1");
+      return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/CancerSurfaceClose2");
 		}
 	}
 }
