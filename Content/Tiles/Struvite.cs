@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using TheCancerBiome.Content.Dusts;
 
 namespace TheCancerBiome.Content.Tiles
 {
@@ -17,6 +18,7 @@ namespace TheCancerBiome.Content.Tiles
 
 			//DustType = DustID.Platinum;
 			HitSound = SoundID.Tink;
+      DustType = ModContent.DustType<TumorineDust>();
 		}
   }
 }

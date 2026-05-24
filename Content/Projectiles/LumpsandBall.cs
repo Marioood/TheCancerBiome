@@ -1,4 +1,4 @@
-using TheCancerBiome.Content.Items;
+using TheCancerBiome.Content.Items.Placeable;
 using TheCancerBiome.Content.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -20,7 +20,7 @@ namespace TheCancerBiome.Content.Projectiles
 	{
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			ProjectileID.Sets.FallingBlockTileItem[Type] = new(ModContent.TileType<Tiles.Lumpsand>(), ModContent.ItemType<Items.Lumpsand>());
+			ProjectileID.Sets.FallingBlockTileItem[Type] = new(ModContent.TileType<Tiles.Lumpsand>(), ModContent.ItemType<Items.Placeable.Lumpsand>());
 		}
 
 		public override void SetDefaults() {

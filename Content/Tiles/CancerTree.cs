@@ -1,4 +1,5 @@
 using TheCancerBiome.Content.Items;
+using TheCancerBiome.Content.Items.Placeable;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -37,10 +38,10 @@ namespace TheCancerBiome.Content.Tiles
 			return texture;
 		}
 
-		/*public override int SaplingGrowthType(ref int style) {
+		public override int SaplingGrowthType(ref int style) {
 			style = 0;
-			return ModContent.TileType<Plants.ExampleSapling>();
-		}*/
+			return ModContent.TileType<CancerSapling>();
+		}
 		// Branch Textures
 		public override Asset<Texture2D> GetBranchTextures() => branchesTexture;
 
@@ -48,7 +49,7 @@ namespace TheCancerBiome.Content.Tiles
 		public override Asset<Texture2D> GetTopTextures() => topsTexture;
 
 		public override int DropWood() {
-			return ModContent.ItemType<Items.Cellulose>();
+			return ModContent.ItemType<Items.Placeable.Cellulose>();
 		}
 
 		/*public override bool Shake(int x, int y, ref bool createLeaves) {

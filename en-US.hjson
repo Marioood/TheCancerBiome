@@ -103,6 +103,67 @@ Mods: {
 				DisplayName: Bouncy Ball
 				Tooltip: "'Uhhh he-h-he-he-h-h-he'"
 			}
+
+			BallBuster: {
+				DisplayName: Ball Buster
+				Tooltip: "'Used in the ancient game of Babylonian Ball Busting'"
+			}
+
+			Cytoplasm: {
+				DisplayName: Cytoplasm
+				Tooltip: ""
+			}
+
+			GolgiApparatchet: {
+				DisplayName: Golgi Apparatchet
+				Tooltip: ""
+			}
+
+			FatHeadBanner: {
+				DisplayName: Fat Head Banner
+				Tooltip: ""
+			}
+
+			ImmunocyteBanner: {
+				DisplayName: Immunocyte Banner
+				Tooltip: ""
+			}
+
+			StickyBuddyBanner: {
+				DisplayName: Sticky Buddy Banner
+				Tooltip: ""
+			}
+
+			CancerSeeds: {
+				DisplayName: Cancer Seeds
+				Tooltip: ""
+			}
+
+			LumpstoneBrick: {
+				DisplayName: Lumpstone Brick
+				Tooltip: ""
+			}
+
+			GrotesqueCuirass: {
+				DisplayName: Grotesque Cuirass
+				Tooltip: +{0} armor penetration
+			}
+
+			GrotesqueHelmet: {
+				SetBonus: Increased jump height and movement speed
+				DisplayName: Grotesque Helmet
+				Tooltip: +{0} armor penetration
+			}
+
+			GrotesqueGreaves: {
+				DisplayName: Grotesque Greaves
+				Tooltip: +{0} armor penetration and immunity to Slow
+			}
+
+			OrangeIce: {
+				DisplayName: Orange Ice
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -118,6 +179,7 @@ Mods: {
 			TinyCancerBossTwoMembrane.DisplayName: Tiny Cancer Boss Two Membrane
 			ModerateCancerBossTwoMembrane.DisplayName: Moderate Cancer Boss Two Membrane
 			SmallCancerBossTwoMembrane.DisplayName: Small Cancer Boss Two Membrane
+			PrimaryClone.DisplayName: Primary Clone
 		}
 
 		Projectiles: {

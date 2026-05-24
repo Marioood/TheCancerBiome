@@ -14,7 +14,6 @@ namespace TheCancerBiome.Content.Tiles
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = true;
-      TileID.Sets.Conversion.Stone[Type] = true;
       
       Main.tileSand[Type] = true;
 			TileID.Sets.Conversion.Sand[Type] = true; // Allows Clentaminator solutions to convert this tile to their respective Sand tiles.

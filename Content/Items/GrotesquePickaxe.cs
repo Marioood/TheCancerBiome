@@ -26,14 +26,10 @@ namespace TheCancerBiome.Content.Items
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-				.AddIngredient<TumorineBar>(12)
-				.AddIngredient<CancerBossItem>(6)
+				.AddIngredient<Placeable.TumorineBar>(12)
+				.AddIngredient<Cytoplasm>(6)
         .AddTile(TileID.Anvils)
 				.Register();
 		}
-    
-    public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-      target.AddBuff(BuffID.Slow, 10 * 60);
-    }
 	}
 }

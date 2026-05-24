@@ -13,7 +13,7 @@ namespace TheCancerBiome.Content.Projectiles
     public override void SetDefaults()
     {
       Projectile.width = 12;
-      Projectile.height = 26;
+      Projectile.height = 12;
       Projectile.timeLeft = 60 * 60;
       Projectile.hostile = true;
     }

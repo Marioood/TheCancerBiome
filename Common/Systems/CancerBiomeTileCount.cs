@@ -13,6 +13,7 @@ namespace TheCancerBiome.Common.Systems
 			sum += tileCounts[ModContent.TileType<Lumpstone>()];
 			sum += tileCounts[ModContent.TileType<CancerGrass>()];
 			sum += tileCounts[ModContent.TileType<Lumpsand>()];
+			sum += tileCounts[ModContent.TileType<OrangeIce>()];
       
       cancerBlockCount = sum;
 		}

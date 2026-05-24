@@ -1,6 +1,7 @@
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.Localization;
+using TheCancerBiome.Content.Dusts;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 
@@ -16,6 +17,7 @@ namespace TheCancerBiome.Content.Tiles
 
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(0xF1,0x76,0x03), name);
+      DustType = ModContent.DustType<TumorineDust>();
 		}
   }
 }

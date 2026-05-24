@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
 using TheCancerBiome.Content.Items;
+using TheCancerBiome.Content.Items.Placeable;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria.Audio;
@@ -46,7 +47,7 @@ namespace TheCancerBiome.Content.NPCs
     
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-      npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CancerBossItem>(), 3));
+      npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Cytoplasm>(), 3));
       npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TumorineOre>(), 3));
     }
     

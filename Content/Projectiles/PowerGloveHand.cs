@@ -23,7 +23,7 @@ namespace TheCancerBiome.Content.Projectiles
     {
       Projectile.velocity *= 0.99f;
       
-      if(Projectile.owner == Main.myPlayer) {
+      if(Main.player[Projectile.owner] == Main.LocalPlayer) {
         Projectile.ai[0] = Main.MouseWorld.X;
         Projectile.ai[1] = Main.MouseWorld.Y;
       }

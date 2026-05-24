@@ -3,7 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.ItemDropRules;
+using TheCancerBiome.Content.Items.Placeable;
 using TheCancerBiome.Content.Items;
+using TheCancerBiome.Content.Dusts;
 using Microsoft.Xna.Framework;
 using System;
 
@@ -31,6 +33,9 @@ namespace TheCancerBiome.Content.NPCs
 			NPC.value = 100f;
 			NPC.knockBackResist = 0.75f;
       NPC.aiStyle = -1;
+      
+      Banner = Type;
+      BannerItem = ModContent.ItemType<StickyBuddyBanner>();
 		}
     
     public override void AI()
@@ -72,6 +77,29 @@ namespace TheCancerBiome.Content.NPCs
     {
       npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LipoidalClump>(), 3, 1));
       npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 3, 1));
+    }
+    
+		public override void HitEffect(NPC.HitInfo hit) {
+			if(Main.netMode == NetmodeID.Server) {
+        return;
+      }
+      for(int i = 0; i < 8; i++) {
+        Dust.NewDustDirect(NPC.TopLeft, NPC.width, NPC.height, ModContent.DustType<OrangeCellDust>());
+      }
+      
+      if(NPC.life <= 0) {
+        for(int i = 0; i < 16; i++) {
+          Dust.NewDustDirect(NPC.TopLeft, NPC.width, NPC.height, ModContent.DustType<OrangeCellDust>());
+        }
+        int gore1 = Mod.Find<ModGore>("OrangeCellGore1").Type;
+        int gore2 = Mod.Find<ModGore>("NucleusGore1").Type;
+        var entSrc = NPC.GetSource_Death();
+        
+        for(int i = 0; i < 3; i++) {
+          Gore.NewGore(entSrc, NPC.position, Vector2.Zero, gore1);
+        }
+        Gore.NewGore(entSrc, NPC.position, Vector2.Zero, gore2);
+      }
     }
 	}
 }

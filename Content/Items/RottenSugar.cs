@@ -31,7 +31,7 @@ namespace TheCancerBiome.Content.Items
 		}
 
 		public override bool CanUseItem(Player player) {
-			return !NPC.AnyNPCs(ModContent.NPCType<CancerBossTwo>()) && (player.InModBiome<CancerSurfaceBiome>() || player.InModBiome<CancerUndergroundBiome>());
+			return !NPC.AnyNPCs(ModContent.NPCType<PrimaryClone>()) && (player.InModBiome<CancerSurfaceBiome>() || player.InModBiome<CancerUndergroundBiome>());
 		}
 
 		public override bool? UseItem(Player player) {
@@ -40,15 +40,13 @@ namespace TheCancerBiome.Content.Items
 				// (explicitly excluded serverside here)
 				SoundEngine.PlaySound(SoundID.Roar, player.position);
 
-				int type = ModContent.NPCType<CancerBossTwo>();
+				int type = ModContent.NPCType<PrimaryClone>();
 
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					// If the player is not in multiplayer, spawn directly
 					NPC.SpawnOnPlayer(player.whoAmI, type);
-				}
-				else {
+				} else {
 					// If the player is in multiplayer, request a spawn
-					// This will only work if NPCID.Sets.MPAllowedEnemies[type] is true, which we set in MinionBossBody
 					NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: type);
 				}
 			}
@@ -60,7 +58,7 @@ namespace TheCancerBiome.Content.Items
 		public override void AddRecipes() {
 			CreateRecipe()
 				.AddIngredient<LipoidalClump>(15)
-				.AddIngredient<Struvite>(10)
+				.AddIngredient<Placeable.Struvite>(10)
 				.AddTile(TileID.DemonAltar)
 				.Register();
 		}

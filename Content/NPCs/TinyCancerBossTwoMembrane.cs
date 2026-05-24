@@ -18,7 +18,7 @@ namespace TheCancerBiome.Content.NPCs
       
 			NPC.width = 32;
 			NPC.height = 32;
-			NPC.damage = 15;
+			NPC.damage = 18;
       NPC.lifeMax = 25;
 		}
     public override void OnKill() { }

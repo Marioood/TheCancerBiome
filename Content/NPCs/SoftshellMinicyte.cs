@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 using TheCancerBiome.Content.Items;
+using TheCancerBiome.Content.Items.Placeable;
 using System;
 using Microsoft.Xna.Framework;
 
@@ -18,8 +19,8 @@ namespace TheCancerBiome.Content.NPCs
 		}
 
 		public override void SetDefaults() {
-			NPC.width = 18;
-			NPC.height = 40;
+			NPC.width = 33;
+			NPC.height = 57;
 			NPC.damage = 16;
 			NPC.defense = 6;
 			NPC.lifeMax = 20;
@@ -32,7 +33,7 @@ namespace TheCancerBiome.Content.NPCs
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-      npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CancerBossItem>(), 2));
+      npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Cytoplasm>(), 2));
       npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<TumorineOre>(), 2));
     }
 

@@ -9,7 +9,7 @@ namespace TheCancerBiome.Content.Items
 	{
 		public override void SetDefaults()
 		{
-			Item.damage = 24;
+			Item.damage = 32;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 12;
 			Item.height = 12;
@@ -30,7 +30,7 @@ namespace TheCancerBiome.Content.Items
     
 		public override void AddRecipes() {
 			CreateRecipe(50)
-				.AddIngredient<TumorineBar>(5)
+				.AddIngredient<Placeable.TumorineBar>(5)
 				.AddIngredient<LipoidalClump>(20)
         .AddTile(TileID.Anvils)
 				.Register();

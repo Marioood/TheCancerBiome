@@ -2,10 +2,13 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.Chat;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using System.Collections.Generic;
 using TheCancerBiome.Content.Items;
+using TheCancerBiome.Content.NPCs;
+using System;
 
 namespace TheCancerBiome.Content.Tiles
 {
@@ -33,10 +36,48 @@ namespace TheCancerBiome.Content.Tiles
     public override void KillMultiTile(int i, int j, int frameX, int frameY) {
       //look in WorldGen.cs for this code
 			if (!WorldGen.gen && Main.netMode != NetmodeID.MultiplayerClient) {
+        int bossType = ModContent.NPCType<PrimaryClone>();
         WorldGen.shadowOrbCount++;
         WorldGen.shadowOrbSmashed = true;
+        
+        if(WorldGen.shadowOrbCount >= 3)
+        {
+          if (!NPC.AnyNPCs(bossType))
+          {
+            WorldGen.shadowOrbCount = 0;
+            float num3 = (float) (i * 16);
+            float num4 = (float) (j * 16);
+            float num5 = -1f;
+            int plr = 0;
+            for (int index = 0; index < (int) byte.MaxValue; ++index)
+            {
+              float num6 = Math.Abs(Main.player[index].position.X - num3) + Math.Abs(Main.player[index].position.Y - num4);
+              if ((double) num6 < (double) num5 || (double) num5 == -1.0)
+              {
+                plr = index;
+                num5 = num6;
+              }
+            }
+            NPC.SpawnOnPlayer(plr, bossType);
+          }
+        }
+        else
+        {
+          LocalizedText localizedText = Lang.misc[10];
+          if (WorldGen.shadowOrbCount == 2)
+            localizedText = Lang.misc[11];
+          switch (Main.netMode)
+          {
+            case 0:
+              Main.NewText(localizedText.ToString(), (byte) 50, byte.MaxValue, (byte) 130);
+              break;
+            case 2:
+              ChatHelper.BroadcastChatMessage(NetworkText.FromKey(localizedText.Key), new Color(50, (int) byte.MaxValue, 130), -1);
+              break;
+          }
+        }
+        
       }
-      
 		}
     
     public override IEnumerable<Item> GetItemDrops(int i, int j) {

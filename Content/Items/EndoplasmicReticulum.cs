@@ -15,7 +15,7 @@ namespace TheCancerBiome.Content.Items
 			Item.useTime = 25;
 			Item.useAnimation = 25;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 12;
+			Item.knockBack = 8;
 			Item.value = Item.buyPrice(silver: 12);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
@@ -24,7 +24,7 @@ namespace TheCancerBiome.Content.Items
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-				.AddIngredient<TumorineBar>(10)
+				.AddIngredient<Placeable.TumorineBar>(10)
         .AddTile(TileID.Anvils)
 				.Register();
 		}

@@ -2,7 +2,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
+using TheCancerBiome.Content.Items.Placeable;
 using TheCancerBiome.Content.Items;
+using TheCancerBiome.Content.Dusts;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria.Audio;
@@ -26,13 +28,13 @@ namespace TheCancerBiome.Content.NPCs
     };
     
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[Type] = 1;
+			Main.npcFrameCount[Type] = 4;
 		}
     
 		public override void SetDefaults()
 		{
 			NPC.width = 42;
-			NPC.height = 76;
+			NPC.height = 42;
 			NPC.damage = 40;
 			NPC.defense = 6;
 			NPC.lifeMax = 67;
@@ -41,6 +43,9 @@ namespace TheCancerBiome.Content.NPCs
 			NPC.value = 250f;
 			NPC.knockBackResist = 0.8f;
       NPC.aiStyle = -1;
+      
+      Banner = Type;
+      BannerItem = ModContent.ItemType<ImmunocyteBanner>();
 		}
     
     public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -80,8 +85,10 @@ namespace TheCancerBiome.Content.NPCs
         }
         NPC.velocity += strafeDir;
         
-        if(AiChargeTimer <= 0) {
-          AiChargeTimer = ((float)Main.rand.NextDouble() * 5 + 5) * 60;
+        if(AiChargeTimer == 0) {
+          if(Main.netMode != NetmodeID.MultiplayerClient) {
+            AiChargeTimer = ((float)Main.rand.NextDouble() * 5 + 5) * 60;
+          }
           NPC.velocity = dirTo * 16;
           AiAnimTimer = 0;
           SoundEngine.PlaySound(RoarSound, NPC.Center);
@@ -100,15 +107,40 @@ namespace TheCancerBiome.Content.NPCs
     }
     
     public override void FindFrame(int frameHeight) {
-      /*NPC.frame.Y = (AiAnimTimer / 10) % 2 * frameHeight;
+      NPC.frame.Y = (AiAnimTimer / 8) % 3 * frameHeight;
       if(AiAnimTimer <= 1 * 60) {
-        NPC.frame.Y = 2 * frameHeight;
+        NPC.frame.Y = 3 * frameHeight;
       }
-      AiAnimTimer++;*/
+      AiAnimTimer++;
     }
     
     public override bool? CanFallThroughPlatforms() {
       return true;
+    }
+    
+		public override void HitEffect(NPC.HitInfo hit) {
+			if(Main.netMode == NetmodeID.Server) {
+        return;
+      }
+      for(int i = 0; i < 8; i++) {
+        Dust.NewDustDirect(NPC.TopLeft, NPC.width, NPC.height, ModContent.DustType<OrangeCellDust>());
+      }
+      
+      if(NPC.life <= 0) {
+        for(int i = 0; i < 16; i++) {
+          Dust.NewDustDirect(NPC.TopLeft, NPC.width, NPC.height, ModContent.DustType<OrangeCellDust>());
+        }
+        int gore1 = Mod.Find<ModGore>("OrangeCellGore1").Type;
+        int gore2 = Mod.Find<ModGore>("NucleusGore1").Type;
+        int gore3 = Mod.Find<ModGore>("ImmunocyteGore").Type;
+        var entSrc = NPC.GetSource_Death();
+        
+        for(int i = 0; i < 4; i++) {
+          Gore.NewGore(entSrc, NPC.position, Vector2.Zero, gore1);
+        }
+        Gore.NewGore(entSrc, NPC.position, Vector2.Zero, gore2);
+        Gore.NewGore(entSrc, NPC.position, Vector2.Zero, gore3);
+      }
     }
 	}
 }

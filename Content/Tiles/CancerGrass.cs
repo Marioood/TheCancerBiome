@@ -33,5 +33,37 @@ namespace TheCancerBiome.Content.Tiles
 				Framing.GetTileSafely(i, j).ResetToType(TileID.Dirt);
 			}
 		}
+    
+    public override void RandomUpdate(int i, int j) {
+      Tile tile = Framing.GetTileSafely(i, j);
+      Tile above = Framing.GetTileSafely(i, j-1);
+      
+			if (!above.HasTile)
+			{
+        if(WorldGen.genRand.NextBool(8)) {
+          if(!tile.BottomSlope && !tile.TopSlope && !tile.IsHalfBlock)
+          {
+            above.ResetToType((ushort)ModContent.TileType<CancerTallGrass>());
+            above.HasTile = true;
+            above.TileFrameY = 0;
+            above.TileFrameX = (short)(WorldGen.genRand.Next(8) * 18);
+            WorldGen.SquareTileFrame(i, j + 1, true);
+            if (Main.netMode == NetmodeID.Server)
+              NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
+          }
+        } else if(WorldGen.genRand.NextBool(24)) {
+          if(!tile.BottomSlope && !tile.TopSlope && !tile.IsHalfBlock)
+          {
+            above.ResetToType(TileID.ImmatureHerbs);
+            above.HasTile = true;
+            above.TileFrameY = 52;
+            above.TileFrameX = 0;
+            WorldGen.SquareTileFrame(i, j + 1, true);
+            if (Main.netMode == NetmodeID.Server)
+              NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
+          }
+        }
+			}
+    }
   }
 }

@@ -23,6 +23,7 @@ namespace TheCancerBiome.Content.Tiles
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
+			TileID.Sets.SwaysInWindBasic[Type] = true;
       
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.StyleHorizontal = true;
@@ -42,7 +43,9 @@ namespace TheCancerBiome.Content.Tiles
 			}
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-      Main.tile[i, j].TileFrameX = (short)(WorldGen.genRand.Next(6) * 18);
+      Tile under = Framing.GetTileSafely(i, j+1);
+      if(!under.HasTile || under.TileType != ModContent.TileType<CancerGrass>() || under.IsHalfBlock || under.TopSlope)
+        WorldGen.KillTile(i, j);
       return true;
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
